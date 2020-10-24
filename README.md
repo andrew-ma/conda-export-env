@@ -6,7 +6,7 @@
 
 * Tip: add this script to a folder in path to use it anywhere, or add this folder to path
 
-* Note: you must be activated in a conda environment to use save mode
+* Note: you must be activated in the conda environment that you want to export for save mode, and you must be activated in any conda environment for restore mode (in case you are getting HTTP000 error)
 
 ## Usage
 
@@ -30,12 +30,12 @@ save folder: 'c:\Users\R\Documents\CondaEnvironments'
 
 ### Restore mode
 ```
-usage: cenv.py restore [-h] [--new-name NEW_NAME] env
+usage: cenv.py restore [-h] [--name NAME] env
 
 positional arguments:
   env                  Pass in a path to an environment file or the env name that was saved
 
 optional arguments:
   -h, --help           show this help message and exit
-  --new-name NEW_NAME  Create conda env with new name
+  --name NEW_NAME  Create conda env with new name
 ```

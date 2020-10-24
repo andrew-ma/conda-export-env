@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     parser_restore = subparsers.add_parser("restore", help="Create conda env from environment file name or path")
     parser_restore.add_argument("env", type=check_environment_filename_or_path, help="Pass in a path to an environment file or the env name that was saved")
-    parser_restore.add_argument("--new-name", default=None, help="Create conda env with new name")
+    parser_restore.add_argument("--name", default=None, help="Create conda env with new name")
     # and another argument for new name of env to be created based off of old name
     
     args = parser.parse_args()
@@ -65,7 +65,7 @@ if __name__ == "__main__":
             subprocess.call(["conda", "env", "export", "--from-history"], stdout=stdout_file)
             print(f"Backed up to {filename}")
     elif args.command == "restore":
-        if args.new_name is not None:
+        if args.name is not None:
             all_lines = None
             with open(args.env, "r") as f:
                 # change name: to new_name
@@ -73,7 +73,7 @@ if __name__ == "__main__":
                 
             # change first line
             colon_idx = all_lines[0].index(':')
-            new_first_line = all_lines[0][0:colon_idx + 2] + args.new_name + "\n"
+            new_first_line = all_lines[0][0:colon_idx + 2] + args.name + "\n"
             all_lines[0] = new_first_line
             
             filename, ext = os.path.splitext(args.env)
@@ -81,8 +81,8 @@ if __name__ == "__main__":
             with open(mod_filename, "w") as f:
                 f.writelines(all_lines)
                 
-            subprocess.call(["conda", "env", "create", "-f", mod_filename], shell=True)
+            subprocess.call(["conda", "env", "create", "-f", mod_filename])
             
             os.remove(mod_filename)
         else:   
-            subprocess.call(["conda", "env", "create", "-f", args.env], shell=True)
+            subprocess.call(["conda", "env", "create", "-f", args.env])
